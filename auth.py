@@ -17,5 +17,3 @@ def hashed_password(Password : str):
 
 def verify_password(plain_password:str, hashed_password:str):
     return pwd_context.verify(plain_password,hashed_password)
-
-# if isinstance(value,str) else value

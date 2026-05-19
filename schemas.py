@@ -106,6 +106,8 @@ class BookResponse(BaseModel):
     Author: str
     Quantity : int
     Total_Quantity : int 
+    Created_At: date
+    Updated_At :  Optional[date] = None
 
 
     class Config:
@@ -157,6 +159,16 @@ class ReturnResponse(BaseModel):
 
     class Config:
         from_attributes = True 
+
+class ReportResponse(BaseModel):
+    Total_Books : int 
+    Stock : int 
+    Borrow_Quantity : int  
+
+
+
+
+
     
 class UserUpdate(BaseModel):
     UserId : str
@@ -188,7 +200,8 @@ class BookUpdate(BaseModel):
     
     Title : Optional[str] = None
     Author: Optional[str] = None
-    Quantity : Optional[int] = None
+    Quantity: Optional[int] = Field(default=None, gt=0,le=20)
+    # Total_Quantity : Optional[int] = None
 
 
 
