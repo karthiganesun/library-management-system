@@ -95,13 +95,17 @@ class LoginResponse(BaseModel):
 class CreateBook(BaseModel): 
     
     Title : str
+    Image : Optional[str] = None
     Author: str
     Quantity : int = Field(gt=0,le=20)
+    
     # Total_Quantity : int #---bud_ID - 2
 
 
 class BookResponse(BaseModel):
+    
     Id : int
+    Image : Optional[str] = None
     Title : str
     Author: str
     Quantity : int

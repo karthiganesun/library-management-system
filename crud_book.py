@@ -19,7 +19,7 @@ def create_book(db:Session,user:schemas.CreateBook):
 	else:
 		# book = models.Book(Book_Id = user.Book_Id.lower(), Title = user.Title.lower(), Author = user.Author.lower(), Quantity = user.Quantity)
 		# book = models.Book(Title = user.Title.lower(), Author = user.Author.lower(), Quantity = user.Quantity) #---bud_ID - 1
-		book = models.Book(Title = user.Title.lower(), Author = user.Author.lower(), Quantity = user.Quantity, Total_Quantity = user.Quantity, Created_At = datetime.now())
+		book = models.Book(Image = user.Image,Title = user.Title.lower(), Author = user.Author.lower(), Quantity = user.Quantity, Total_Quantity = user.Quantity, Created_At = datetime.now())
 		db.add(book)
 		db.commit()
 		db.refresh(book)
@@ -40,6 +40,7 @@ def update_book(db:Session, Title:str, user:schemas.CreateBook):
 
 		for key, value in user.dict(exclude_unset=True).items():						
 			setattr(db_book, key, value.lower() if isinstance(value, str) else value)
+			#setattr(db_book, key, value)
 
 		db_book.Updated_At = datetime.now().date()
 		db_book.Total_Quantity = user.Quantity

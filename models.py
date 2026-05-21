@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String, Date,DateTime
+from sqlalchemy import Column, Integer, String, Date,DateTime, Text
 from datetime import datetime
 from .database import Base 
 
@@ -21,6 +21,7 @@ class Book(Base):
 	__tablename__ = "Book_Management"
 	
 	Id = Column(Integer, primary_key=True, index=True)
+	Image = Column(Text,nullable=True)
 	Title = Column(String,unique=True,index=True,nullable=False)
 	Author = Column(String,index=True,nullable=False)
 	Created_At = Column(Date,nullable=False)
