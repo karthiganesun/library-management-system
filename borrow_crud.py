@@ -85,11 +85,11 @@ def pay_fine(db:Session, userid:str, amount:float):
     db_user = db.query(models.Return).filter(models.Return.UserId == userid.lower(),models.Return.Fine >0).all()
     # db_dupborrow = db.query(models.UPBorrow).filter(models.UPBorrow.UserId == borrow.UserId.lower()).first() 
     db_borrow = db.query(models.Borrow).filter(models.Borrow.UserId == userid.lower()).first() 
-    data = [db_user,db_borrow]
+    # data = [db_user,db_borrow]
 
     total_fine = sum(f.Fine for f in db_user)
 
-    balance_fine = sum(f.Fine for f in db_user) - amount
+    balance_fine = total_fine - amount
 
     if not db_user:
         raise HTTPException(status_code=404, detail="No outstanding fines found")
@@ -100,8 +100,13 @@ def pay_fine(db:Session, userid:str, amount:float):
     if amount > balance_fine:
         raise HTTPException(status_code=403, detail="Amount exceeds of Fine amount")
     
-    for borrow in data:
-        borrow.Fine = balance_fine
+    # for borrow in data:
+    #     borrow.Fine = balance_fine
+    for item in db_user:
+        item.Fine = balance_fine
+
+    if db_borrow:
+        db_borrow.Fine = balance_fine
 
     try:
         db.commit()
@@ -111,7 +116,8 @@ def pay_fine(db:Session, userid:str, amount:float):
         raise HTTPException(status_code=500, detail="Payment Failed")    
     return {
         "message":f"Fine paid successfully for {userid}",
-        "paid_amount" : amount
+        "paid_amount" : amount,
+        "remaining_fine": balance_fine
     }    
 
 

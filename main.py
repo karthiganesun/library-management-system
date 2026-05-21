@@ -90,7 +90,7 @@ def getid_return(user_id: str,db:Session=Depends(get_db)):
 	return crud_return.getid_return(db,user_id)
 
 @app.post("/return_book/",response_model= schemas.ReturnResponse)
-def borrow_return(borrow:schemas.BorrowBook, db:Session=Depends(get_db)):
+def borrow_return(borrow:schemas.ReturnBook, db:Session=Depends(get_db)):
 	return crud_return.borrow_return(db, borrow)
 
 
