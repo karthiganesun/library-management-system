@@ -41,7 +41,7 @@ def borrow_return(db:Session,borrow:schemas.BorrowBook):
             fine = late_days * fine_perday
             db_borrow.Fine = fine        
     
-        db_return = models.Return(Title=db_borrowing.Title.lower(), UserId=db_borrowing.UserId.lower(), Quantity=borrow.Quantity, Borrow_Date=db_borrowing.Borrow_Date, Due_Date=db_borrowing.Due_Date, Return_Date=datetime.now().date(), Fine=100,Status="Returned")
+        db_return = models.Return(Title=db_borrowing.Title.lower(), UserId=db_borrowing.UserId.lower(), Quantity=borrow.Quantity, Borrow_Date=db_borrowing.Borrow_Date, Due_Date=db_borrowing.Due_Date, Return_Date=datetime.now().date(), Fine=fine,Status="Returned")
         db.add(db_return)
         db_borrowing.Quantity -= current_return
 
